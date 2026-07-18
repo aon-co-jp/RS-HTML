@@ -1,0 +1,13 @@
+[package]
+name = "rhtml5"
+description = "RHTML5: a from-scratch Rust HTML5 tokenizer/DOM builder, aiming for browser-engine-grade compatibility, designed for Poem-based SSR pipelines."
+version = "0.1.0"
+edition = "2021"
+rust-version = "1.75"
+license = "Apache-2.0 OR MIT"
+repository = "https://github.com/aon-co-jp/rhtml5"
+
+[lints.rust]
+unsafe_code = "deny"
+
+[dependencies]
