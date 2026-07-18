@@ -27,7 +27,7 @@ RTypeScript(Wasm)がハイドレーション)を見据える。
   実装時に参考にする(本クレートは現段階で`String`ベースの単純な
   実装、ゼロコピー化は次段階の課題として明記)。
 
-## 現状(第一段、2026-07-18)
+## 現状(第二段、2026-07-18)
 
 - `src/token.rs`: `Token`列挙型(`Doctype`/`StartTag`/`EndTag`/
   `Comment`/`Characters`/`Eof`)、`Attribute`、`TokenSink`トレイト、
@@ -36,21 +36,30 @@ RTypeScript(Wasm)がハイドレーション)を見据える。
   ではなく、実用上重要な部分状態機械のサブセットを実装
   (Data・TagOpen・TagName・属性名/値(引用符あり/なし)・
   SelfClosingStartTag・コメント・DOCTYPE・EOF)。
+- **`src/dom.rs`(2026-07-18新規)**: `Node`(`Element`/`Text`/
+  `Comment`)・`Document`・`TreeBuilder`(`TokenSink`実装)。開いている
+  要素のスタックでネスト構造を組み立てる簡略化版(HTML5仕様本来の
+  insertion mode・adoption agency algorithmは再現しない)。
+  void要素(`br`/`img`/`input`等、終了タグを持たない要素)を認識し
+  子要素を持たせない。閉じ忘れの終了タグは無視、対応する開始タグが
+  無いままEOFに達した要素は文書の子として畳み込む(実ブラウザの
+  寛容な挙動を簡略化して再現)。`Document::to_html()`でHTML文字列へ
+  シリアライズ可能(正規化された出力、入力とバイト単位で一致すると
+  限らないが構造的に等価)。
 - **未対応(次段階)**: CDATA区間、文字参照(`&amp;`等)のデコード、
   `<script>`/`<style>`の生テキストモード、仕様上のパースエラー
   回復規則の厳密な再現。
-- **検証**: `cargo test`で7件全green(プレーンテキスト・開始/終了タグ・
-  引用符あり/なし/boolean属性・自己終了タグ・コメント・DOCTYPE・
-  完全なHTML文書形状の一気通貫)。警告0件。
+- **検証**: `cargo test`で13件全green(トークナイザ7件+DOM構築6件、
+  ネスト要素構築・void要素の子無し確認・DOCTYPE捕捉・閉じ忘れ要素の
+  畳み込み・**パース→シリアライズの構造的往復**を含む)。警告0件。
 
 ## 次にすべきこと
 
-1. DOM木構築器(`TokenSink`実装、`Node`/`Element`/`Document`型)
-2. RCSS3(パーサー→カスケード→スタイル計算、インラインstyle出力まで)
-3. RHTML5+RCSS3を使った最小のPoem SSRエンドポイント(最初の
+1. RCSS3(パーサー→カスケード→スタイル計算、インラインstyle出力まで)
+2. RHTML5+RCSS3を使った最小のPoem SSRエンドポイント(最初の
    マイルストーン)
-4. レイアウトエンジン(flexbox/grid、後回し可)
-5. RBootStrap → RTypeScript(RTypeScriptの実装案はB案「TS風構文の
+3. レイアウトエンジン(flexbox/grid、後回し可)
+4. RBootStrap → RTypeScript(RTypeScriptの実装案はB案「TS風構文の
    RustネイティブDSL、Wasm直接コンパイル」から着手しC案
    「swcでASTのみ取り込み、DOM操作サブセットを独自インタプリタで実行」
    へ拡張するのが現実的、という方針)
