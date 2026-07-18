@@ -67,5 +67,16 @@ RTypeScript(Wasm)がハイドレーション)を見据える。
 ## 関連プロジェクト
 
 - [open-raid-z](https://github.com/aon-co-jp/open-raid-z) — 開発ルールの正本
-- RCSS3 / RBootStrap / RTypeScript — 未作成(次段階でリポジトリ新設予定)
-- RReact — 別プロジェクトで並行開発中(本構想とは別スコープ)
+- RCSS3 — 実装済み(未作成ではなくなった。2026-07-18時点で子孫結合子まで対応)
+- [RTypeScript](https://github.com/aon-co-jp/RTypeScript) — 2026-07-18に最小スコープ(トークナイザ+型注釈除去)で新設済み
+- RBootStrap — 未作成
+- [RReact](https://github.com/aon-co-jp/RReact) — 別プロジェクトで並行開発中(本構想とは別スコープ)だが、2026-07-18に`dom_bridge`フィーチャ経由で本クレート(`rhtml5`)・`rcss3`と接続済み(RHTMLでパースしたDOM木→RCSSでスタイル解決→RReactのVNode木、という最小のEnd-to-Endパイプライン。詳細はRReact側CLAUDE.md参照)
+
+## HANDOFF
+
+- **2026-07-18 RReact/RCSSとの相互統合が(RReact側`dom_bridge`フィーチャ経由で)実現**:
+  本クレート自体にコード変更は無いが、`RReact`が`rhtml5`(本クレート)を
+  optional path依存として取り込み、`parse_document`で作った
+  `Document`/`Element`をRCSSでスタイル解決してRReactの`VNode`木へ
+  変換する処理を実装した。3プロジェクトが独立実装のまま繋がって
+  いなかった状態を解消。詳細・テストはRReact側CLAUDE.md参照。
