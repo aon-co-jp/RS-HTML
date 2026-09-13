@@ -12,6 +12,6 @@ pub mod dom;
 pub mod token;
 pub mod tokenizer;
 
-pub use dom::{parse_document, Document, Element, Node, TreeBuilder};
+pub use dom::{parse_document, serialize_node, Document, Element, Node, TreeBuilder};
 pub use token::{Attribute, CollectingSink, Token, TokenSink};
 pub use tokenizer::{tokenize, Tokenizer};
