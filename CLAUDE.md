@@ -1,6 +1,17 @@
-# 開発方針＆開発環境ルール(rhtml5)
+# 開発方針＆開発環境ルール(RS-HTML)
 
-作業ドライブは`F:\open-runo`。この節は[`open-raid-z`](https://github.com/aon-co-jp/open-raid-z)の`CLAUDE.md`を正本とし、各プロジェクトへコピーして同期する方針に準じる。
+作業ドライブは`F:\runo`。この節は[`open-raid-z`](https://github.com/aon-co-jp/open-raid-z)の`CLAUDE.md`を正本とし、各プロジェクトへコピーして同期する方針に準じる。
+
+## リポジトリ改称(2026-09-13)
+
+`RTHML`(GitHub上の実名、ローカルフォルダ名は`RHTML`)→`RS-HTML`へrename済み
+(typoだった`RTHML`表記も同時に解消)。`aruaru.pro`向けのフロント基盤整備に
+合わせた`RFrontEnd`傘下のネーミング統一の一環(`RS-CSS`・`RS-GraphQL`・
+`RS-Node.js`も同時に改称)。crate名(`rhtml5`)・依存元(`RS-BootStrap`・
+`RS-React`の`dom_bridge`フィーチャ)からの参照はpath文字列のみ更新し、
+crate名自体は変更していない(依存関係の広さに対して名前変更の効果が
+薄いため、今回は見送り)。以下の記述内の`RHTML`/`RTHML`表記は
+改称前の履歴として残す。
 
 ## このプロジェクトの構想(2026-07-18新設)
 
