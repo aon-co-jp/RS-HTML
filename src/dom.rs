@@ -68,7 +68,11 @@ impl Document {
     }
 }
 
-fn serialize_node(node: &Node, out: &mut String) {
+/// 単一の`Node`をHTML文字列へ直列化する(`Document::to_html`が文書
+/// 全体に対して行うのと同じ規則を、`Document`を経由せず単一ノードに
+/// 対して使いたい呼び出し側——たとえばRS-Reactの`VNode`木をSSR時に
+/// 直接HTML化する用途——のために公開する)。
+pub fn serialize_node(node: &Node, out: &mut String) {
     match node {
         Node::Text(text) => out.push_str(text),
         Node::Comment(text) => out.push_str(&format!("<!--{text}-->")),
