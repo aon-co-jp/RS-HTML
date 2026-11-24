@@ -1,3 +1,5 @@
+> Latest translations / 翻訳の最新版: [0-LATEST-TRANSLATIONS.md](0-LATEST-TRANSLATIONS.md)
+
 # rhtml5
 
 HTML5相当のブラウザエンジン級パーサー/DOM実装を、一から開発するプロジェクト。
