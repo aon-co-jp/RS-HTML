@@ -1,3 +1,3 @@
 source: aon-co-jp/RS-HTML
-commit: 7fa08d9907d50ce510ae0bb4ae0c72034f1471b1
-updated: 2026-11-25T04:50:03Z
+commit: e92f03df2db4305985c68feb57507b7deee765a8
+updated: 2026-11-27T05:30:47Z
